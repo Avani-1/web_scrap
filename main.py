@@ -31,8 +31,10 @@ html_text = requests.get('https://www.townscript.com/in/delhi/paid--business').t
 soup = bs(html_text, 'lxml')
 
 events = soup.find_all('div', class_ = 'lg:w-1/3 md:w-2/5 w-full px-3 my-3 fadeIn ng-star-inserted',limit=5)
- 
+dict = {}
+i=1
 for event in events:
+    dict_temp = {}
     event_name = event.div.a.div.find('div', class_='card-body overflow-hidden w-full flex flex-wrap flex-col px-4 pb-4 md:px-5 md:pb-5 ng-star-inserted').div.div.div.span.string
     event_date = event.div.a.div.find('div', class_='card-body overflow-hidden w-full flex flex-wrap flex-col px-4 pb-4 md:px-5 md:pb-5 ng-star-inserted').div.find('div',class_='secondary-details fadeIn animation-delay flex items-center justify-start text-xs md:text-sm text-gray-800 mt-2 md:mt-3').div.span.string
     location = event.div.a.div.find('div', class_='card-body overflow-hidden w-full flex flex-wrap flex-col px-4 pb-4 md:px-5 md:pb-5 ng-star-inserted').div.find('div',class_='secondary-details fadeIn animation-delay flex items-center justify-start text-xs md:text-sm text-gray-800 mt-2 md:mt-3').find('div', class_='location overflow-hidden whitespace-no-wrap ng-star-inserted').span.string
@@ -86,4 +88,20 @@ for event in events:
     print("Category: ", type)
 
     print("\n\n\n")
+    dict_temp['Event Name'] = event_name
+    dict_temp['Event date'] = event_date
+    dict_temp['Location'] = location
+    dict_temp['URL'] = url
+    dict_temp['Description'] = desc.rstrip()
+    dict_temp['Performer'] = performer
+    dict_temp['Schedule'] = schedule
+    dict_temp['Price'] = price
+    dict_temp['Category'] = type
+
+    t = 'Event '+str(i)
+    dict[t] = dict_temp
+    i+=1
     driver.refresh()
+
+with open('output.json', 'w') as f:
+    json.dump(dict, f)
