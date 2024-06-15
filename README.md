@@ -1,3 +1,6 @@
+Objective:
+Search for the top five B2B events in google list there website, scrape the relevant information from their websites, and compile the data into a structured format.
+
 Prerequisites : 
 1. Google Chrome
 2. Chrome Driver : https://googlechromelabs.github.io/chrome-for-testing/
