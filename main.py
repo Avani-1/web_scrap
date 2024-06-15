@@ -92,10 +92,10 @@ for event in events:
     dict_temp['Event date'] = event_date
     dict_temp['Location'] = location
     dict_temp['URL'] = url
-    dict_temp['Description'] = desc.rstrip()
+    dict_temp['Description'] = desc.replace('\r','')
     dict_temp['Performer'] = performer
     dict_temp['Schedule'] = schedule
-    dict_temp['Price'] = price
+    dict_temp['Price'] = price[2:]
     dict_temp['Category'] = type
 
     t = 'Event '+str(i)
@@ -103,5 +103,5 @@ for event in events:
     i+=1
     driver.refresh()
 
-with open('output.json', 'w') as f:
+with open('event_data.json', 'w') as f:
     json.dump(dict, f)
